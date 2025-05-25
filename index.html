@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline QC System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .result {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+        .seven-zero-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .seven-zero-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .seven-zero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .seven-zero-card h3 {
+            margin-top: 0;
+            color: #3498db;
+            text-align: center;
+        }
+        .summary {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .summary h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #ecf0f1;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .summary-item {
+            background-color: #34495e;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button.clear {
+            background-color: #e74c3c;
+        }
+        button.clear:hover {
+            background-color: #c0392b;
+        }
+        .positive {
+            color: #2ecc71;
+        }
+        .negative {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .seven-zero-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .seven-zero-container {
+                grid-template-columns: 1fr;
+            }
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Inline QC System</h1>
+        
+        <div class="form-group">
+            <label for="total-operators">Total Operators</label>
+            <input type="number" id="total-operators" min="0" placeholder="Enter number of operators">
+        </div>
+        
+        <div class="seven-zero-container">
+            <!-- Seven Zero 1 -->
+            <div class="seven-zero-card">
+                <h3>First Seven Zero</h3>
+                <div class="form-group">
+                    <label for="checked1">Checked Quantity</label>
+                    <input type="number" id="checked1" min="0" placeholder="Enter quantity" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="damage1">Damage Quantity</label>
+                    <input type="number" id="damage1" min="0" placeholder="Enter damage">
+                </div>
+                <div class="result" id="damage-percent1">Damage %: 0%</div>
+            </div>
+            
+            <!-- Seven Zero 2 -->
+            <div class="seven-zero-card">
+                <h3>Second Seven Zero</h3>
+                <div class="form-group">
+                    <label for="checked2">Checked Quantity</label>
+                    <input type="number" id="checked2" min="0" placeholder="Enter quantity" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="damage2">Damage Quantity</label>
+                    <input type="number" id="damage2" min="0" placeholder="Enter damage">
+                </div>
+                <div class="result" id="damage-percent2">Damage %: 0%</div>
+            </div>
+            
+            <!-- Seven Zero 3 -->
+            <div class="seven-zero-card">
+                <h3>Third Seven Zero</h3>
+                <div class="form-group">
+                    <label for="checked3">Checked Quantity</label>
+                    <input type="number" id="checked3" min="0" placeholder="Enter quantity" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="damage3">Damage Quantity</label>
+                    <input type="number" id="damage3" min="0" placeholder="Enter damage">
+                </div>
+                <div class="result" id="damage-percent3">Damage %: 0%</div>
+            </div>
+            
+            <!-- Seven Zero 4 -->
+            <div class="seven-zero-card">
+                <h3>Fourth Seven Zero</h3>
+                <div class="form-group">
+                    <label for="checked4">Checked Quantity</label>
+                    <input type="number" id="checked4" min="0" placeholder="Enter quantity" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="damage4">Damage Quantity</label>
+                    <input type="number" id="damage4" min="0" placeholder="Enter damage">
+                </div>
+                <div class="result" id="damage-percent4">Damage %: 0%</div>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h2>Daily Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div>Total Checked Quantity</div>
+                    <div class="summary-value" id="total-checked">0</div>
+                </div>
+                <div class="summary-item">
+                    <div>Total Damage</div>
+                    <div class="summary-value" id="total-damage">0</div>
+                </div>
+                <div class="summary-item">
+                    <div>Total Damage %</div>
+                    <div class="summary-value" id="total-damage-percent">0%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="clear" id="clear-btn">Clear All Data</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to calculate checked quantity (operators × 7)
+        function calculateCheckedQuantity() {
+            const operators = parseInt(document.getElementById('total-operators').value) || 0;
+            const checkedQuantity = operators * 7;
+            
+            // Set this value for all seven-zero cards
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`checked${i}`).value = checkedQuantity;
+            }
+            
+            // Update all calculations
+            updateAllCalculations();
+        }
+        
+        // Function to calculate damage percentage for each seven-zero
+        function calculateDamagePercentage() {
+            for (let i = 1; i <= 4; i++) {
+                const checked = parseInt(document.getElementById(`checked${i}`).value) || 0;
+                const damage = parseInt(document.getElementById(`damage${i}`).value) || 0;
+                
+                let percentage = 0;
+                if (checked > 0) {
+                    percentage = (damage / checked) * 100;
+                }
+                
+                document.getElementById(`damage-percent${i}`).textContent = `Damage %: ${percentage.toFixed(2)}%`;
+                
+                // Color coding based on percentage
+                if (percentage > 5) { // You can adjust this threshold
+                    document.getElementById(`damage-percent${i}`).className = 'result negative';
+                } else if (percentage > 0) {
+                    document.getElementById(`damage-percent${i}`).className = 'result positive';
+                } else {
+                    document.getElementById(`damage-percent${i}`).className = 'result';
+                }
+            }
+        }
+        
+        // Function to calculate summary
+        function calculateSummary() {
+            let totalChecked = 0;
+            let totalDamage = 0;
+            
+            for (let i = 1; i <= 4; i++) {
+                const checked = parseInt(document.getElementById(`checked${i}`).value) || 0;
+                const damage = parseInt(document.getElementById(`damage${i}`).value) || 0;
+                
+                totalChecked += checked;
+                totalDamage += damage;
+            }
+            
+            let percentage = 0;
+            if (totalChecked > 0) {
+                percentage = (totalDamage / totalChecked) * 100;
+            }
+            
+            document.getElementById('total-checked').textContent = totalChecked;
+            document.getElementById('total-damage').textContent = totalDamage;
+            document.getElementById('total-damage-percent').textContent = `${percentage.toFixed(2)}%`;
+            
+            // Color coding for summary
+            if (percentage > 5) { // You can adjust this threshold
+                document.getElementById('total-damage-percent').className = 'summary-value negative';
+            } else if (percentage > 0) {
+                document.getElementById('total-damage-percent').className = 'summary-value positive';
+            } else {
+                document.getElementById('total-damage-percent').className = 'summary-value';
+            }
+        }
+        
+        // Function to update all calculations
+        function updateAllCalculations() {
+            calculateDamagePercentage();
+            calculateSummary();
+        }
+        
+        // Function to clear all data
+        function clearAllData() {
+            document.getElementById('total-operators').value = '';
+            
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`checked${i}`).value = '';
+                document.getElementById(`damage${i}`).value = '';
+                document.getElementById(`damage-percent${i}`).textContent = 'Damage %: 0%';
+                document.getElementById(`damage-percent${i}`).className = 'result';
+            }
+            
+            document.getElementById('total-checked').textContent = '0';
+            document.getElementById('total-damage').textContent = '0';
+            document.getElementById('total-damage-percent').textContent = '0%';
+            document.getElementById('total-damage-percent').className = 'summary-value';
+        }
+        
+        // Initialize the page
+        window.onload = function() {
+            // Add event listeners
+            document.getElementById('total-operators').addEventListener('input', calculateCheckedQuantity);
+            
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`damage${i}`).addEventListener('input', updateAllCalculations);
+            }
+            
+            // Add event listener to the clear button
+            document.getElementById('clear-btn').addEventListener('click', clearAllData);
+        };
+    </script>
+</body>
+</html>
